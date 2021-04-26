@@ -28,50 +28,23 @@
         </div>
     </nav>
 
-    <h1 class="mt-5 mb-3">List of the most famous people</h1>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Given name</th>
-            <th scope="col">Last name</th>
-            <th scope="col">Birth date</th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="person, iterStat : ${people}">
-            <td th:text="${iterStat.count}">1</td>
-            <td th:text="${person.givenName}">Named</td>
-            <td th:text="${person.lastName}">Person</td>
-            <td th:text="${#temporals.format(person.birthDate)}">1. 1. 1900</td>
-            <td>
-                <a class="btn btn-primary" th:href="@{/edit(id=${iterStat.index})}"><i class="bi-pencil-square" role="img" aria-label="Edit"></i></a>
-                <form th:action="@{/delete}" method="post">
-                    <input type="hidden" name="id" th:value="${iterStat.index}">
-                    <button class="btn btn-secondary"><i class="bi-trash" role="img" aria-label="Delete"></i></button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <h2 class="mt-5 mb-3">Append new person</h2>
-    <form class="row g-3" th:action="@{/}" method="post">
+    <h2 class="mt-5 mb-3">Edit person</h2>
+    <form class="row g-3" th:action="@{/edit}" method="post">
+        <input type="hidden" name="id" th:value="${id}" />
         <div class="col-md-4">
             <label for="givenName" class="form-label">Given name</label>
-            <input id="givenName" name="givenName" class="form-control" type="text"/>
+            <input id="givenName" name="givenName" class="form-control" type="text" th:value="${person.givenName}"/>
         </div>
         <div class="col-md-5">
             <label for="lastName" class="form-label">Last name</label>
-            <input id="lastName" name="lastName" class="form-control" type="text"/>
+            <input id="lastName" name="lastName" class="form-control" type="text" th:value="${person.lastName}"/>
         </div>
         <div class="col-md-2">
             <label for="birthDate" class="form-label">Birth date</label>
-            <input id="birthDate" name="birthDate" class="form-control" type="date"/>
+            <input id="birthDate" name="birthDate" class="form-control" type="date" th:value="${person.birthDate}"/>
         </div>
         <div class="col-md-1 align-self-end">
-            <button type="submit" class="btn btn-primary"><i class="bi-person-plus-fill" role="img" aria-label="Append"></i></button>
+            <button type="submit" class="btn btn-primary"><i class="bi-person-check-fill" role="img" aria-label="Save"></i></button>
         </div>
     </form>
 </div>

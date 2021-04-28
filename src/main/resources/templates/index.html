@@ -20,8 +20,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex" method="get" th:action="@{/}">
+                    <input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search" th:value="${query}">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
             </div>
@@ -39,20 +39,41 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>Named</td>
-            <td>Person</td>
-            <td>1. 1. 1900</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Unknown</td>
-            <td>Person</td>
-            <td>1. 1. 1999</td>
+        <tr th:each="person, personStat : ${people}">
+            <td th:text="${personStat.count}">1</td>
+            <td th:text="${person.givenName}">Named</td>
+            <td th:text="${person.lastName}">Person</td>
+            <td th:text="${person.birthDate}">1. 1. 1900</td>
         </tr>
         </tbody>
     </table>
+
+    <h2 class="mt-5 mb-3">Append new person</h2>
+    <form class="row g-3" th:action="@{/}" method="post">
+        <div class="col-md-4">
+            <label for="given-name" class="form-label">Given name</label>
+            <input id="given-name" name="givenName" class="form-control" type="text"/>
+        </div>
+        <div class="col-md-5">
+            <label for="last-name" class="form-label">Last name</label>
+            <input id="last-name" name="lastName" class="form-control" type="text"/>
+        </div>
+        <div class="col-md-2">
+            <label for="birth-date" class="form-label">Birth date</label>
+            <input id="birth-date" name="birthDate" class="form-control" type="date"/>
+        </div>
+        <div class="col-md-1 align-self-end">
+            <button type="submit" class="btn btn-primary"><i class="bi-person-plus-fill" role="img" aria-label="Append"></i></button>
+        </div>
+    </form>
+
+    <h2 class="mt-5 mb-3">Delete person</h2>
+    <form class="row g-3" th:action="@{/}" method="post">
+        <input name="id" type="hidden" value="0"/>
+        <div>
+            <button type="submit" class="btn btn-primary">Delete</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>
